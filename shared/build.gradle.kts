@@ -12,6 +12,7 @@ kotlin {
         }
     }
 
+    jvm()
     listOf(
         iosX64(),
         iosArm64(),
@@ -30,6 +31,11 @@ kotlin {
         commonTest.dependencies {
             implementation(libs.kotlin.test)
         }
+
+        jvmTest.dependencies {
+            implementation(libs.kotlin.logging)
+            implementation(libs.logback.classic)
+        }
     }
 }
 
@@ -43,5 +49,16 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
+    }
+
+    testOptions {
+        unitTests {
+            isReturnDefaultValues = true
+            isIncludeAndroidResources = true
+        }
+    }
+
+    dependencies {
+        testImplementation(libs.junit)
     }
 }
