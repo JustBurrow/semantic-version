@@ -1,24 +1,29 @@
 package kr.lul.version
 
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertFailsWith
-import kotlin.test.assertNotNull
+import io.kotest.assertions.throwables.shouldThrow
+import io.kotest.core.spec.IsolationMode
+import io.kotest.core.spec.style.BehaviorSpec
+import io.kotest.matchers.shouldBe
+import io.kotest.matchers.shouldNotBe
 
-@Suppress("NonAsciiCharacters")
-class VersionBuilderTest {
+class VersionBuilderTest : BehaviorSpec() {
     private val logger = Logger(VersionBuilderTest::class)
 
-    @Test
-    fun `VersionCore - 빈 문자열로 만들기`() {
-        // WHEN
-        val e = assertFailsWith<IllegalArgumentException> {
-            VersionCore("")
-        }
-        logger.log("[WHEN] e=$e", e)
+    override fun isolationMode() = IsolationMode.InstancePerLeaf
 
-        // THEN
-        assertNotNull(e)
-        assertEquals("core is empty.", e.message)
+    init {
+        given("VersionCore를") {
+            `when`("빈 문자열로 호출하면") {
+                val e = shouldThrow<IllegalArgumentException> {
+                    VersionCore("")
+                }
+                logger.log("[WHEN] e=$e")
+
+                then("에러를 던진다.") {
+                    e shouldNotBe null
+                    e.message shouldBe "core is empty."
+                }
+            }
+        }
     }
 }
