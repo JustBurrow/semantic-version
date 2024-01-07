@@ -9,10 +9,10 @@ import kotlin.test.assertTrue
 
 @Suppress("NonAsciiCharacters")
 class VersionCoreTest {
-    private val logger = Logger(VersionCore::class)
+    private val logger = Logger(VersionCoreTest::class)
 
     @Test
-    fun `constructor - 쓸 수 없는 숫자`() {
+    fun `new - 쓸 수 없는 숫자`() {
         for (data in listOf(
             listOf(-1, 0, 0),
             listOf(0, -1, 0),
