@@ -19,6 +19,6 @@ class VersionBuilderTest {
 
         // THEN
         assertNotNull(e)
-        assertEquals("versionCore is empty.", e.message)
+        assertEquals("core is empty.", e.message)
     }
 }
