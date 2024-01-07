@@ -1,13 +1,15 @@
 package kr.lul.version
 
-import android.util.Log
+import mu.KotlinLogging
 
 actual fun Logger(name: String): Logger = object : Logger {
+    private val logger = KotlinLogging.logger(name)
+
     override fun log(message: String) {
-        Log.i(name, message)
+        logger.info(message)
     }
 
     override fun log(message: String, throwable: Throwable) {
-        Log.i(name, message, throwable)
+        logger.info(message, throwable)
     }
 }

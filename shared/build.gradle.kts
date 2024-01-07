@@ -51,6 +51,7 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
 
+    @Suppress("UnstableApiUsage")
     testOptions {
         unitTests {
             isReturnDefaultValues = true
@@ -60,5 +61,7 @@ android {
 
     dependencies {
         testImplementation(libs.junit)
+        testImplementation(libs.kotlin.logging)
+        testImplementation(libs.logback.classic)
     }
 }
