@@ -4,11 +4,11 @@ package kr.lul.version
 /**
  * [Semantic Versioning 2.0.0](https://semver.org)의 `<version core>` 구현.
  */
-class VersionCore(
+class Core(
     val major: Int,
     val minor: Int,
     val patch: Int
-) : Comparable<VersionCore> {
+) : Comparable<Core> {
     companion object {
         /**
          * `<version core>` 부분.
@@ -33,7 +33,7 @@ class VersionCore(
         }
     }
 
-    override fun compareTo(other: VersionCore) = when {
+    override fun compareTo(other: Core) = when {
         this === other ->
             0
 
@@ -51,7 +51,7 @@ class VersionCore(
         if (this === other) return true
         if (other == null || this::class != other::class) return false
 
-        other as VersionCore
+        other as Core
 
         if (major != other.major) return false
         if (minor != other.minor) return false

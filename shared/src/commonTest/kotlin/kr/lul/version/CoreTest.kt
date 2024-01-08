@@ -8,8 +8,8 @@ import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 
 @Suppress("NonAsciiCharacters")
-class VersionCoreTest {
-    private val logger = Logger(VersionCoreTest::class)
+class CoreTest {
+    private val logger = Logger(CoreTest::class)
 
     @Test
     fun `new - 쓸 수 없는 숫자`() {
@@ -29,7 +29,7 @@ class VersionCoreTest {
 
             // WHEN
             val e = assertFailsWith<IllegalArgumentException> {
-                VersionCore(major, minor, patch)
+                Core(major, minor, patch)
             }
             logger.log("[WHEN] e=$e", e)
 
@@ -42,11 +42,11 @@ class VersionCoreTest {
     @Test
     fun `compareTo - 자기 자신`() {
         for (core in listOf(
-            VersionCore(0, 0, 0),
-            VersionCore(1, 0, 0),
-            VersionCore(0, 2, 0),
-            VersionCore(0, 0, 3),
-            VersionCore(1, 2, 3)
+            Core(0, 0, 0),
+            Core(1, 0, 0),
+            Core(0, 2, 0),
+            Core(0, 0, 3),
+            Core(1, 2, 3)
         )) {
             // GIVEN
             logger.log("[GIVEN] core=$core")
@@ -64,11 +64,11 @@ class VersionCoreTest {
     @Test
     fun `compareTo - 버전은 같지만 다른 인스턴스`() {
         for (data in listOf(
-            listOf(VersionCore(0, 0, 0), VersionCore(0, 0, 0)),
-            listOf(VersionCore(1, 0, 0), VersionCore(1, 0, 0)),
-            listOf(VersionCore(0, 2, 0), VersionCore(0, 2, 0)),
-            listOf(VersionCore(0, 0, 3), VersionCore(0, 0, 3)),
-            listOf(VersionCore(1, 2, 3), VersionCore(1, 2, 3))
+            listOf(Core(0, 0, 0), Core(0, 0, 0)),
+            listOf(Core(1, 0, 0), Core(1, 0, 0)),
+            listOf(Core(0, 2, 0), Core(0, 2, 0)),
+            listOf(Core(0, 0, 3), Core(0, 0, 3)),
+            listOf(Core(1, 2, 3), Core(1, 2, 3))
         )) {
             // GIVEN
             val core1 = data[0]
@@ -90,9 +90,9 @@ class VersionCoreTest {
     @Test
     fun `compareTo - 서로 다른 버전`() {
         for (data in listOf(
-            listOf(VersionCore(0, 0, 0), VersionCore(0, 0, 3)),
-            listOf(VersionCore(0, 0, 0), VersionCore(0, 2, 0)),
-            listOf(VersionCore(0, 0, 0), VersionCore(1, 0, 0)),
+            listOf(Core(0, 0, 0), Core(0, 0, 3)),
+            listOf(Core(0, 0, 0), Core(0, 2, 0)),
+            listOf(Core(0, 0, 0), Core(1, 0, 0)),
         )) {
             // GIVEN
             val core1 = data[0]

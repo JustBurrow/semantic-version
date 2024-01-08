@@ -13,10 +13,10 @@ class VersionBuilderTest {
     private val logger = Logger(VersionBuilderTest::class)
 
     @Test
-    fun `VersionCore - 빈 문자열로 만들기`() {
+    fun `Core - 빈 문자열로 만들기`() {
         // WHEN
         val e = assertFailsWith<IllegalArgumentException> {
-            VersionCore("")
+            Core("")
         }
         logger.log("[WHEN] e=$e", e)
 
@@ -26,7 +26,7 @@ class VersionBuilderTest {
     }
 
     @Test
-    fun `VersionCore - 쓸 수 없는 문자열을 사용했을 때`() {
+    fun `Core - 쓸 수 없는 문자열을 사용했을 때`() {
         for (core in listOf(
             "-1.0.0",
             "0.-1.0",
@@ -56,7 +56,7 @@ class VersionBuilderTest {
 
             // WHEN
             val e = assertFailsWith<IllegalArgumentException> {
-                VersionCore(core)
+                Core(core)
             }
             logger.log("[WHEN] e=$e", e)
 
@@ -66,14 +66,14 @@ class VersionBuilderTest {
                 assertNotNull(this)
                 assertContains(this, "illegal core format")
                 assertContains(this, core)
-                assertContains(this, VersionCore.PATTERN)
+                assertContains(this, Core.PATTERN)
             }
             println()
         }
     }
 
     @Test
-    fun `VersionCore - 문자열을 사용했을 때`() {
+    fun `Core - 문자열을 사용했을 때`() {
         for (data in listOf(
             listOf("0.0.0", 0, 0, 0),
             listOf("0.0.1", 0, 0, 1),
@@ -93,7 +93,7 @@ class VersionBuilderTest {
             logger.log("[GIVEN] core=$core, major=$major, minor=$minor, patch=$patch")
 
             // WHEN
-            val versionCore = VersionCore(core)
+            val versionCore = Core(core)
             logger.log("[WHEN] versionCore=$versionCore")
 
             // THEN

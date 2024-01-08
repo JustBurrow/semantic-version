@@ -1,20 +1,20 @@
 package kr.lul.version
 
 /**
- * [VersionCore] 인스턴스 생성.
+ * [Core] 인스턴스 생성.
  */
-fun VersionCore(core: String): VersionCore {
+fun Core(core: String): Core {
     when {
         core.isEmpty() ->
             throw IllegalArgumentException("core is empty.")
 
-        !core.matches(VersionCore.REGEX) ->
-            throw IllegalArgumentException("illegal core format : core=$core, pattern=${VersionCore.PATTERN}")
+        !core.matches(Core.REGEX) ->
+            throw IllegalArgumentException("illegal core format : core=$core, pattern=${Core.PATTERN}")
     }
 
     val tokens = core.split('.')
 
-    return VersionCore(
+    return Core(
         tokens[0].toInt(10),
         tokens[1].toInt(10),
         tokens[2].toInt(10)
