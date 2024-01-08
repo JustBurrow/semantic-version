@@ -1,11 +1,14 @@
 # Version
 
-[Semantic Versioning 2.0.0](https://semver.org) 규칙을 지원하는 KMP 라이브러리.
+[Semantic Versioning 2.0.0](https://semver.org)을 지원하는 KMP 라이브러리.
 
 ## Dev Env.
 
 - [Get started with Kotlin Multiplatform — tutorial](https://www.jetbrains.com/help/kotlin-multiplatform-dev/multiplatform-getting-started.html)
   을 따라 환경 설정.
+- JDK 17을 사용.
+- IDE는 Android Studio를 사용.
+- 로컬 레포지토리 경로는 `~/Repositories/github.com/JustBurrow/version`으로 가정함.
 
 ### macOS
 
@@ -17,10 +20,10 @@
 ```shell
 # 필요한 명령만 실행.
 brew update
-brew install jenv openjdk@17 jetbrains-toolbox
+brew install jenv openjdk@17
 jenv add /opt/homebrew/opt/openjdk@17/libexec/openjdk.jdk/Contents/Home/
 
-mkdir -p ~/Repositories/github.com/JustBurrow # 경로는 자기 컴퓨터 설정에 따라 변경.
+mkdir -p ~/Repositories/github.com/JustBurrow
 cd ~/Repositories/github.com/JustBurrow
 git clone git@github.com:JustBurrow/version.git
 
