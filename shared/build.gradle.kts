@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
+    `maven-publish`
 }
 
 kotlin {
@@ -10,6 +11,7 @@ kotlin {
                 jvmTarget = "17"
             }
         }
+        publishLibraryVariants("debug", "release")
     }
 
     jvm()
@@ -42,6 +44,7 @@ kotlin {
 android {
     namespace = "kr.lul.version"
     compileSdk = 34
+
     defaultConfig {
         minSdk = 27
     }
