@@ -3,7 +3,7 @@ package kr.lul.version
 import kotlin.math.min
 
 /**
- * [Semantic Versioning 2.0.0](https://semver.org) 구현.
+ * [Semantic Versioning 2.0.0](https://semver.org)의 `<pre-release>` 구현.
  */
 class PreRelease(
     private val parts: List<Part>

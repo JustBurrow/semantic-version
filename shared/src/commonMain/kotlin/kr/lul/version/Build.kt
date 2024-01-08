@@ -1,7 +1,7 @@
 package kr.lul.version
 
 /**
- * [Semantic Versioning 2.0.0](https://semver.org) 구현.
+ * [Semantic Versioning 2.0.0](https://semver.org)의 `<build>` 구현.
  */
 class Build(
     private val build: String
