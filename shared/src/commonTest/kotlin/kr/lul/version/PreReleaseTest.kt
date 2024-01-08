@@ -10,6 +10,25 @@ import kotlin.test.assertTrue
 
 @Suppress("NonAsciiCharacters")
 class PreReleaseTest {
+    companion object {
+        /**
+         * 낮은 버전의 인덱스가 낮게 정렬한 샘플.
+         */
+        val VALID_SAMPLE = listOf(
+            PreRelease("0"),
+            PreRelease("1.2.3"),
+            PreRelease("1.2.3.beta"),
+            PreRelease("a"),
+            PreRelease("alpha"),
+            PreRelease("alpha.1"),
+            PreRelease("alpha.beta"),
+            PreRelease("beta"),
+            PreRelease("beta.1"),
+            PreRelease("beta.1.2.3.test"),
+            PreRelease("beta.2")
+        )
+    }
+
     private val logger = Logger(PreReleaseTest::class)
 
     @Test

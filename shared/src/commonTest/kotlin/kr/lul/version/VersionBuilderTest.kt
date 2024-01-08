@@ -110,6 +110,7 @@ class VersionBuilderTest {
     fun `PreRelease - 사용할 수 없는 값`() {
         for (data in listOf(
             listOf("", "preRelease is empty"),
+            listOf("01", "text is number literal"),
             listOf(" ", "illegal preRelease pattern"),
             listOf("\n", "illegal preRelease pattern"),
             listOf("\t", "illegal preRelease pattern"),
@@ -206,6 +207,117 @@ class VersionBuilderTest {
             // THEN
             assertTrue(pr1 < pr2)
             assertTrue(pr2 > pr1)
+            println()
+        }
+    }
+
+    @Test
+    fun `Version - 빈 문자열`() {
+        // WHEN
+        val e = assertFailsWith<IllegalArgumentException> {
+            Version("")
+        }
+        logger.log("[WHEN] e=$e", e)
+
+        // THEN
+        assertNotNull(e)
+        assertEquals("version is empty.", e.message)
+    }
+
+    @Test
+    fun `Version - 사용할 수 없는 버전`() {
+        for (version in listOf(
+            "1",
+            ".",
+            "-",
+            "+",
+            "?",
+            "ㅁ",
+            "🎉",
+            "1.",
+            "1.2",
+            "1.2.",
+            "1.2.3.",
+            "1--",
+            "1-+",
+            "1++",
+            "1.--",
+            "1.-+",
+            "1.++",
+            "1.2--",
+            "1.2-+",
+            "1.2++",
+            "1.2.--",
+            "1.2.-+",
+            "1.2.++",
+            "1.2.3--",
+            "1.2.3-+",
+            "1.2.3.++",
+            "1.2.3.--",
+            "1.2.3.-+",
+            "1.2.3.++",
+            "1.0.0--alpha",
+            "1.0.0-01",
+            "1.0.0-001",
+            "1.0.0-alpha-Z",
+            "1.0.0-023++a",
+            "1.0.0++a",
+            "001",
+            "abc",
+        )) {
+            // GIVEN
+            logger.log("[GIVEN] version=$version")
+
+            // WHEN
+            val e = assertFailsWith<IllegalArgumentException> { Version(version) }
+            logger.log("[WHEN] e=$e", e)
+
+            // THEN
+            assertNotNull(e)
+            with(e.message) {
+                assertNotNull(this)
+                assertContains(this, "illegal version pattern")
+                assertContains(this, "version=$version")
+                assertContains(this, "pattern=${Version.PATTERN}")
+            }
+            println()
+        }
+    }
+
+    @Test
+    fun `Version - 사용할 수 있는 문자열`() {
+        for (data in listOf(
+            listOf("1.0.0", 1, 0, 0, null, null),
+            listOf("1.9.0-alpha", 1, 9, 0, "alpha", null),
+            listOf("1.10.0-alpha.1", 1, 10, 0, "alpha.1", null),
+            listOf("2.0.0-alpha.beta", 2, 0, 0, "alpha.beta", null),
+            listOf("2.0.1-0a", 2, 0, 1, "0a", null),
+            listOf("2.1.0-0a+000", 2, 1, 0, "0a", "000"),
+            listOf("2.3.4+001", 2, 3, 4, null, "001"),
+            listOf("0.0.1+20130313144700", 0, 0, 1, null, "20130313144700"),
+            listOf("0.1.0+exp.sha.5114f85", 0, 1, 0, null, "exp.sha.5114f85"),
+            listOf("10.100.1000-rc.1+001.29.aaa", 10, 100, 1000, "rc.1", "001.29.aaa")
+        )) {
+            // GIVEN
+            val version = data[0] as String
+            val major = data[1] as Int
+            val minor = data[2] as Int
+            val patch = data[3] as Int
+            val preRelease = data[4] as String?
+            val build = data[5] as String?
+            logger.log("[GIVEN] version=$version, major=$major, minor=$minor, patch=$patch, preRelease=$preRelease, build=$build")
+
+            // WHEN
+            val actual = Version(version)
+            logger.log("[WHEN] actual=$actual")
+
+            // THEN
+            assertEquals(major, actual.major)
+            assertEquals(minor, actual.minor)
+            assertEquals(patch, actual.patch)
+            assertEquals(preRelease, actual.preRelease?.toString())
+            assertEquals(build, actual.build?.toString())
+            assertEquals(version, actual.toString())
             println()
         }
     }

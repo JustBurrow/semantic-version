@@ -9,6 +9,23 @@ import kotlin.test.assertTrue
 
 @Suppress("NonAsciiCharacters")
 class CoreTest {
+    companion object {
+        /**
+         * 낮은 버전의 인덱스가 낮게 정렬한 샘플.
+         */
+        val VALID_SAMPLE = listOf(
+            Core(0, 0, 0),
+            Core(0, 0, 3),
+            Core(0, 0, Int.MAX_VALUE),
+            Core(0, 2, 0),
+            Core(0, Int.MAX_VALUE, 0),
+            Core(1, 0, 0),
+            Core(1, 2, 3),
+            Core(Int.MAX_VALUE, 0, 0),
+            Core(Int.MAX_VALUE, Int.MAX_VALUE, Int.MAX_VALUE)
+        )
+    }
+
     private val logger = Logger(CoreTest::class)
 
     @Test
@@ -41,13 +58,7 @@ class CoreTest {
 
     @Test
     fun `compareTo - 자기 자신`() {
-        for (core in listOf(
-            Core(0, 0, 0),
-            Core(1, 0, 0),
-            Core(0, 2, 0),
-            Core(0, 0, 3),
-            Core(1, 2, 3)
-        )) {
+        for (core in VALID_SAMPLE) {
             // GIVEN
             logger.log("[GIVEN] core=$core")
 
@@ -63,13 +74,9 @@ class CoreTest {
 
     @Test
     fun `compareTo - 버전은 같지만 다른 인스턴스`() {
-        for (data in listOf(
-            listOf(Core(0, 0, 0), Core(0, 0, 0)),
-            listOf(Core(1, 0, 0), Core(1, 0, 0)),
-            listOf(Core(0, 2, 0), Core(0, 2, 0)),
-            listOf(Core(0, 0, 3), Core(0, 0, 3)),
-            listOf(Core(1, 2, 3), Core(1, 2, 3))
-        )) {
+        for (data in VALID_SAMPLE.map {
+            listOf(it, Core(it.major, it.minor, it.patch))
+        }) {
             // GIVEN
             val core1 = data[0]
             val core2 = data[1]
@@ -89,27 +96,25 @@ class CoreTest {
 
     @Test
     fun `compareTo - 서로 다른 버전`() {
-        for (data in listOf(
-            listOf(Core(0, 0, 0), Core(0, 0, 3)),
-            listOf(Core(0, 0, 0), Core(0, 2, 0)),
-            listOf(Core(0, 0, 0), Core(1, 0, 0)),
-        )) {
-            // GIVEN
-            val core1 = data[0]
-            val core2 = data[1]
-            logger.log("[GIVEN] core1=$core1, core2=$core2")
+        for (i in (0..<VALID_SAMPLE.size - 1)) {
+            for (j in (i + 1..<VALID_SAMPLE.size)) {
+                // GIVEN
+                val core1 = VALID_SAMPLE[i]
+                val core2 = VALID_SAMPLE[j]
+                logger.log("[GIVEN] core1=$core1, core2=$core2")
 
-            // WHEN
-            val actual1 = core1.compareTo(core2)
-            val actual2 = core2.compareTo(core1)
-            logger.log("[WHEN] actual1=$actual1, actual2=$actual2")
+                // WHEN
+                val actual1 = core1.compareTo(core2)
+                val actual2 = core2.compareTo(core1)
+                logger.log("[WHEN] actual1=$actual1, actual2=$actual2")
 
-            // THEN
-            assertTrue(core1 < core2)
-            assertNotEquals(core1, core2)
-            assertTrue(0 > actual1)
-            assertTrue(0 < actual2)
-            println()
+                // THEN
+                assertTrue(core1 < core2)
+                assertNotEquals(core1, core2)
+                assertTrue(0 > actual1)
+                assertTrue(0 < actual2)
+                println()
+            }
         }
     }
 }

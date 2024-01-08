@@ -9,8 +9,16 @@ import kotlin.test.assertNotNull
 
 @Suppress("NonAsciiCharacters")
 class BuildTest {
+    companion object {
+        val VALID_SAMPLE = listOf(
+            Build("001"),
+            Build("20130313144700"),
+            Build("exp.sha.5114f85")
+        )
+    }
+
     private val logger = Logger(BuildTest::class)
-    private val VALID_BUILD_SAMPLE = listOf(
+    private val validSample = listOf(
         "001",
         "20130313144700",
         "exp.sha.5114f85"
@@ -65,7 +73,7 @@ class BuildTest {
 
     @Test
     fun `new - 사용할 수 있는 문자열`() {
-        for (build in VALID_BUILD_SAMPLE) {
+        for (build in validSample) {
             // GIVEN
             logger.log("[GIVEN] build=$build")
 
@@ -81,7 +89,7 @@ class BuildTest {
 
     @Test
     fun `== - 동일 인스턴스`() {
-        for (build in VALID_BUILD_SAMPLE.map { Build(it) }) {
+        for (build in VALID_SAMPLE) {
             // WHEN
             logger.log("[WHEN] build=$build")
 
@@ -93,7 +101,7 @@ class BuildTest {
 
     @Test
     fun `== - 같은 값을 가진 서로 다른 인스턴스`() {
-        for (build in VALID_BUILD_SAMPLE) {
+        for (build in validSample) {
             // GIVEN
             logger.log("[GIVEN] build=$build")
 
@@ -113,7 +121,7 @@ class BuildTest {
     fun `== - 서로 다른 값을 가진 인스턴스`() {
         for (i in (1..50)) {
             // GIVEN
-            val data = VALID_BUILD_SAMPLE.shuffled()
+            val data = validSample.shuffled()
             val b1 = data[0]
             val b2 = data[1]
             logger.log("[GIVEN] b1=$b1, b2=$b2")
