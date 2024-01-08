@@ -1,5 +1,5 @@
 name: Min CI (JVM test only)
-run-name: "#${{ github.run_number }}, ID:${{ github.run_id }}), ref:${{ github.ref_name }}, sha:${{ github.sha }}), @${{ github.actor }}"
+run-name: "ID:${{ github.run_id }}), ref:${{ github.ref_name }}, sha:${{ github.sha }})"
 on: [ push ]
 jobs:
   test:
@@ -12,6 +12,8 @@ jobs:
           java-version: '17'
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
+        with:
+          gradle-version: wrapper
       - name: Run test
         run: ./gradlew :shared:jvmTest
       - name: Publish Test Report
