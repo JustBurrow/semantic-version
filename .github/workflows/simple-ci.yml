@@ -1,0 +1,24 @@
+name: Simple CI
+run-name: "Simple CI on #${{ github.ref_name }} @${{ github.actor }}"
+on: [ push ]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: adopt
+          java-version: '17'
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
+        with:
+          gradle-version: wrapper
+      - name: Run test
+        run: ./gradlew :shared:jvmTest  --rerun-tasks --continue
+      - if: success() || failure()
+        uses: actions/upload-artifact@v4
+        name: Upload test report
+        with:
+          name: "reports_${{ github.run_id }}"
+          path: shared/build/reports/tests/jvmTest
