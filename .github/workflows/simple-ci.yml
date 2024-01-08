@@ -1,5 +1,5 @@
 name: Min CI (JVM test only)
-run-name: "#${{ github.run_number }}(${{ github.run_id }}) ref : ${{ github.ref }}(${{ github.sha }}), by : ${{ github.actor }}"
+run-name: "#${{ github.run_number }}, ID:${{ github.run_id }}), ref:${{ github.ref_name }}, sha:${{ github.sha }}), @${{ github.actor }}"
 on: [ push ]
 jobs:
   test:
