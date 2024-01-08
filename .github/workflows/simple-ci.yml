@@ -14,3 +14,6 @@ jobs:
         uses: gradle/gradle-build-action@v2
       - name: Run test
         run: ./gradlew :shared:jvmTest
+      - name: Publish Test Report
+        uses: mikepenz/action-junit-report@v4
+        if: success() || failure()
