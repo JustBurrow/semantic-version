@@ -75,8 +75,8 @@ publishing {
             name = "GitHubPackages"
             url = uri("https://github.com/JustBurrow/version")
             credentials {
-                username = "${project.findProperty("gpr.user") ?: System.getenv("USERNAME")}"
-                password = "${project.findProperty("gpr.key") ?: System.getenv("TOKEN")}"
+                username = System.getenv("GITHUB_ACTOR")
+                password = System.getenv("GITHUB_TOKEN")
             }
         }
     }
