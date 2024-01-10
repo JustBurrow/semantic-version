@@ -11,7 +11,6 @@ kotlin {
                 jvmTarget = "17"
             }
         }
-        publishLibraryVariants("debug", "release")
     }
 
     jvm()
@@ -70,21 +69,19 @@ android {
 }
 
 publishing {
+    publications.withType<MavenPublication> {
+        groupId = "kr.lul"
+        artifactId = "version"
+        version = "0.0.1"
+    }
+
     repositories {
         maven {
-            name = "GitHubPackages"
             url = uri("https://github.com/justburrow/version")
             credentials {
                 username = System.getenv("GITHUB_ACTOR")
                 password = System.getenv("GITHUB_TOKEN")
             }
-        }
-    }
-
-    publications {
-        register<MavenPublication>("gpr") {
-            println("components : ${components.names}")
-            from(components["kotlin"])
         }
     }
 }
