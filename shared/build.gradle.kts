@@ -68,3 +68,23 @@ android {
         testImplementation(libs.logback.classic)
     }
 }
+
+publishing {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://github.com/JustBurrow/version")
+            credentials {
+                username = "${project.findProperty("gpr.user") ?: System.getenv("USERNAME")}"
+                password = "${project.findProperty("gpr.key") ?: System.getenv("TOKEN")}"
+            }
+        }
+    }
+
+    publications {
+        register<MavenPublication>("gpr") {
+            println("components : ${components.names}")
+            from(components["kotlin"])
+        }
+    }
+}
