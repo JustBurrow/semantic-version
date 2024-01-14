@@ -21,6 +21,5 @@ jobs:
         with:
           gradle-version: wrapper
           cache-read-only: false
-          cache-overwrite-existing: true
       - name: Publish
         run: ./gradlew clean :shared:publish
