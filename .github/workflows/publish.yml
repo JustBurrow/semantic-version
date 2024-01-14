@@ -20,5 +20,6 @@ jobs:
       - name: Publish
         uses: gradle/gradle-build-action@v2.4.2
         with:
+          arguments: "clean :shared:publish"
           gradle-version: wrapper
-          arguments: ":shared:publish"
+          cache-read-only: false

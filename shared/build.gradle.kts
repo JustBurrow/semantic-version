@@ -72,8 +72,10 @@ android {
             maven {
                 url = uri("https://github.com/JustBurrow/semantic-version")
                 credentials {
-                    username = System.getenv("GITHUB_ACTOR")
-                    password = System.getenv("GITHUB_TOKEN")
+                    username = project.findProperty("gpr.user") as String?
+                        ?: System.getenv("USERNAME")
+                    password = project.findProperty("gpr.key") as String?
+                        ?: System.getenv("TOKEN")
                 }
             }
         }
