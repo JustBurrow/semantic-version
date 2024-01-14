@@ -40,8 +40,15 @@ kotlin {
     }
 
     publishing {
+        publications {
+            register<MavenPublication>("gpr") {
+                from(components["kotlin"])
+            }
+        }
+
         repositories {
             maven {
+                name = "GitHubPackages"
                 url = uri("https://github.com/JustBurrow/semantic-version")
                 credentials {
                     username = project.findProperty("gpr.user") as String?
