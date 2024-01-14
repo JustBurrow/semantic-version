@@ -14,6 +14,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "semver"
+rootProject.name = "semantic-version"
 
 include(":shared")

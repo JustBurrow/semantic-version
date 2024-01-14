@@ -66,21 +66,15 @@ android {
         testImplementation(libs.kotlin.logging)
         testImplementation(libs.logback.classic)
     }
-}
 
-publishing {
-    publications.withType<MavenPublication> {
-        groupId = "kr.lul"
-        artifactId = "version"
-        version = "0.0.1"
-    }
-
-    repositories {
-        maven {
-            url = uri("https://github.com/justburrow/version")
-            credentials {
-                username = System.getenv("GITHUB_ACTOR")
-                password = System.getenv("GITHUB_TOKEN")
+    publishing {
+        repositories {
+            maven {
+                url = uri("https://github.com/JustBurrow/semantic-version")
+                credentials {
+                    username = System.getenv("GITHUB_ACTOR")
+                    password = System.getenv("GITHUB_TOKEN")
+                }
             }
         }
     }
