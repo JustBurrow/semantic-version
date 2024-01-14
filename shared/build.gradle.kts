@@ -45,10 +45,8 @@ kotlin {
                 name = "GitHubPackages"
                 url = uri("https://maven.pkg.github.com/JustBurrow/semantic-version")
                 credentials {
-                    username = project.findProperty("gpr.user") as String?
-                        ?: System.getenv("GITHUB_ACTOR")
-                    password = project.findProperty("gpr.key") as String?
-                        ?: System.getenv("GITHUB_TOKEN")
+                    username = System.getenv("GITHUB_ACTOR")
+                    password = System.getenv("GITHUB_TOKEN")
                 }
             }
         }
@@ -58,6 +56,12 @@ kotlin {
                 groupId = "kr.lul"
                 artifactId = "semantic-version"
                 version = "0.0.1"
+
+                pom {
+                    scm {
+                        url = "https://github.com/JustBurrow/semantic-version"
+                    }
+                }
 
                 from(components["kotlin"])
             }
