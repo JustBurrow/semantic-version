@@ -38,6 +38,20 @@ kotlin {
             implementation(libs.logback.classic)
         }
     }
+
+    publishing {
+        repositories {
+            maven {
+                url = uri("https://github.com/JustBurrow/semantic-version")
+                credentials {
+                    username = project.findProperty("gpr.user") as String?
+                        ?: System.getenv("USERNAME")
+                    password = project.findProperty("gpr.key") as String?
+                        ?: System.getenv("TOKEN")
+                }
+            }
+        }
+    }
 }
 
 android {
@@ -66,18 +80,5 @@ android {
         testImplementation(libs.kotlin.logging)
         testImplementation(libs.logback.classic)
     }
-
-    publishing {
-        repositories {
-            maven {
-                url = uri("https://github.com/JustBurrow/semantic-version")
-                credentials {
-                    username = project.findProperty("gpr.user") as String?
-                        ?: System.getenv("USERNAME")
-                    password = project.findProperty("gpr.key") as String?
-                        ?: System.getenv("TOKEN")
-                }
-            }
-        }
-    }
 }
+
