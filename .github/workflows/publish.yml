@@ -23,3 +23,6 @@ jobs:
           cache-read-only: false
       - name: Publish
         run: ./gradlew clean :shared:publish
+        env:
+          GITHUB_ACTOR: ${{ github.actor }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
