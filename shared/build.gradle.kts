@@ -40,22 +40,26 @@ kotlin {
     }
 
     publishing {
-        publications {
-            register<MavenPublication>("gpr") {
-                from(components["kotlin"])
-            }
-        }
-
         repositories {
             maven {
                 name = "GitHubPackages"
-                url = uri("https://github.com/JustBurrow/semantic-version")
+                url = uri("https://maven.pkg.github.com/JustBurrow/semantic-version")
                 credentials {
                     username = project.findProperty("gpr.user") as String?
                         ?: System.getenv("GITHUB_ACTOR")
                     password = project.findProperty("gpr.key") as String?
                         ?: System.getenv("GITHUB_TOKEN")
                 }
+            }
+        }
+
+        publications {
+            create<MavenPublication>("maven") {
+                groupId = "kr.lul"
+                artifactId = "semantic-version"
+                version = "0.0.1"
+
+                from(components["kotlin"])
             }
         }
     }
