@@ -1,8 +1,13 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
     `maven-publish`
 }
+
+val properties = Properties()
+properties.load(project.rootProject.file("local.properties").inputStream())
 
 kotlin {
     androidTarget {
@@ -45,8 +50,10 @@ kotlin {
                 name = "GitHubPackages"
                 url = uri("https://maven.pkg.github.com/JustBurrow/semantic-version")
                 credentials {
-                    username = System.getenv("GITHUB_ACTOR")
-                    password = System.getenv("GITHUB_TOKEN")
+                    username = properties["github.actor"] as String?
+                        ?: System.getenv("GITHUB_ACTOR")
+                    password = properties["github.token"] as String?
+                        ?: System.getenv("GITHUB_TOKEN")
                 }
             }
         }

@@ -16,6 +16,8 @@
 
 - [Homebrew](https://brew.sh) 설치.
 - JDK는 `jenv`로 관라한다.
+- [`sample-local.properties`](sample-local.properties)을 참고해서 `local.properties` 파일을 설정.
+    - Maven publish : `github.actor`, `github.token`
 
 ```shell
 # 필요한 명령만 실행.
