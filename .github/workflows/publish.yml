@@ -3,8 +3,7 @@ run-name: Publish library to GitHub Packages.
 on:
   push:
     branches:
-      - issue/publish_lib
-#      - main
+      - main
 jobs:
   publish:
     runs-on: macos-latest
