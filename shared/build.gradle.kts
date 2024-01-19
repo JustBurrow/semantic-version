@@ -42,37 +42,6 @@ kotlin {
             implementation(libs.logback.classic)
         }
     }
-
-    publishing {
-        repositories {
-            maven {
-                name = "GitHubPackages"
-                url = uri("https://maven.pkg.github.com/JustBurrow/semantic-version")
-                credentials {
-                    username = properties["github.actor"] as String?
-                        ?: System.getenv("GITHUB_ACTOR")
-                    password = properties["github.token"] as String?
-                        ?: System.getenv("GITHUB_TOKEN")
-                }
-            }
-        }
-
-        publications {
-            create<MavenPublication>("maven") {
-                groupId = "kr.lul"
-                artifactId = "semantic-version"
-                version = "0.0.1"
-
-                pom {
-                    scm {
-                        url = "https://github.com/JustBurrow/semantic-version"
-                    }
-                }
-
-                from(components["kotlin"])
-            }
-        }
-    }
 }
 
 android {
@@ -103,3 +72,33 @@ android {
     }
 }
 
+publishing {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/JustBurrow/semantic-version")
+            credentials {
+                username = properties["github.actor"] as String?
+                    ?: System.getenv("GITHUB_ACTOR")
+                password = properties["github.token"] as String?
+                    ?: System.getenv("GITHUB_TOKEN")
+            }
+        }
+    }
+
+    publications {
+        create<MavenPublication>("maven") {
+            groupId = "kr.lul"
+            artifactId = "semantic-version"
+            version = "0.0.1"
+
+            pom {
+                scm {
+                    url = "https://github.com/JustBurrow/semantic-version"
+                }
+            }
+
+            from(components["kotlin"])
+        }
+    }
+}
