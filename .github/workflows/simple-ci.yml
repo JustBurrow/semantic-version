@@ -11,9 +11,11 @@ jobs:
           distribution: adopt
           java-version: '17'
       - name: Setup Gradle
-        uses: gradle/gradle-build-action@v2
+        uses: gradle/gradle-build-action@v2.4.2
         with:
           gradle-version: wrapper
+      - name: Setup config.
+        run: cp .github/workflows/local.properties local.properties
       - name: Run test
         run: ./gradlew :shared:jvmTest  --rerun-tasks --continue
       - if: success() || failure()

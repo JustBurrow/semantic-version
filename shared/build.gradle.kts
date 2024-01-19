@@ -1,7 +1,13 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
+    `maven-publish`
 }
+
+val properties = Properties()
+properties.load(project.rootProject.file("local.properties").inputStream())
 
 kotlin {
     androidTarget {
@@ -14,9 +20,8 @@ kotlin {
 
     jvm()
     listOf(
-        iosX64(),
         iosArm64(),
-        iosSimulatorArm64()
+        macosArm64()
     ).forEach {
         it.binaries.framework {
             baseName = "shared"
@@ -26,7 +31,7 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
-            //put your multiplatform dependencies here
+            implementation(libs.kotlin.stdlib)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
@@ -37,11 +42,43 @@ kotlin {
             implementation(libs.logback.classic)
         }
     }
+
+    publishing {
+        repositories {
+            maven {
+                name = "GitHubPackages"
+                url = uri("https://maven.pkg.github.com/JustBurrow/semantic-version")
+                credentials {
+                    username = properties["github.actor"] as String?
+                        ?: System.getenv("GITHUB_ACTOR")
+                    password = properties["github.token"] as String?
+                        ?: System.getenv("GITHUB_TOKEN")
+                }
+            }
+        }
+
+        publications {
+            create<MavenPublication>("maven") {
+                groupId = "kr.lul"
+                artifactId = "semantic-version"
+                version = "0.0.1"
+
+                pom {
+                    scm {
+                        url = "https://github.com/JustBurrow/semantic-version"
+                    }
+                }
+
+                from(components["kotlin"])
+            }
+        }
+    }
 }
 
 android {
     namespace = "kr.lul.version"
     compileSdk = 34
+
     defaultConfig {
         minSdk = 27
     }
@@ -65,3 +102,4 @@ android {
         testImplementation(libs.logback.classic)
     }
 }
+

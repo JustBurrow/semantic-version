@@ -14,5 +14,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Version"
+rootProject.name = "semantic-version"
+
 include(":shared")
