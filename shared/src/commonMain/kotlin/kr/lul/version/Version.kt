@@ -23,10 +23,10 @@ class Version(
             core.compareTo(other.core)
 
         null == preRelease ->
-            -1
+            1
 
         null == other.preRelease ->
-            1
+            -1
 
         else ->
             preRelease.compareTo(other.preRelease)

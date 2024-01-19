@@ -527,4 +527,48 @@ class VersionTest {
             }
         }
     }
+
+    @Test
+    fun `compareTo - 버전 목록으로 순서 비교하기`() {
+        // GIVEN
+        val versions = listOf(
+            "0.0.1-rc1",
+            "0.0.1-rc2",
+            "0.0.1-rc3+abc",
+            "0.0.1",
+            "1.0.0-0.3.7",
+            "1.0.0-alpha",
+            "1.0.0-alpha.1",
+            "1.0.0-alpha.beta",
+            "1.0.0-beta",
+            "1.0.0-beta.2",
+            "1.0.0-beta.11",
+            "1.0.0-rc.1",
+            "1.0.0-x.7.z.92",
+            "1.0.0",
+            "2.0.0-alpha",
+            "2.0.0-alpha.1",
+            "2.0.0",
+            "2.1.0",
+            "2.1.1"
+        ).map { Version(it) }
+
+        for (l in 0..<(versions.size - 1)) {
+            for (h in (l + 1)..<versions.size) {
+                val low = versions[l]
+                val high = versions[h]
+                println("[GIVEN] low=$low, high=$high")
+
+                // WHEN
+                val compare1 = low.compareTo(high)
+                val compare2 = high.compareTo(low)
+                println("[WHEN] compare1=$compare1, compare2=$compare2")
+
+                // THEN
+                assertTrue(0 > compare1)
+                assertTrue(0 < compare2)
+                println()
+            }
+        }
+    }
 }
