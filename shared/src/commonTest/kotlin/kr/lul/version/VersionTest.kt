@@ -9,6 +9,30 @@ import kotlin.test.assertTrue
 
 @Suppress("NonAsciiCharacters")
 class VersionTest {
+    companion object {
+        val SORTED_VERSIONS = listOf(
+            "0.0.1-rc1",
+            "0.0.1-rc2",
+            "0.0.1-rc3+abc",
+            "0.0.1",
+            "1.0.0-0.3.7",
+            "1.0.0-alpha",
+            "1.0.0-alpha.1",
+            "1.0.0-alpha.beta",
+            "1.0.0-beta",
+            "1.0.0-beta.2",
+            "1.0.0-beta.11",
+            "1.0.0-rc.1",
+            "1.0.0-x.7.z.92",
+            "1.0.0",
+            "2.0.0-alpha",
+            "2.0.0-alpha.1",
+            "2.0.0",
+            "2.1.0",
+            "2.1.1"
+        ).map { Version(it) }
+    }
+
     private val logger = Logger(VersionTest::class)
 
     @Test
@@ -530,33 +554,11 @@ class VersionTest {
 
     @Test
     fun `compareTo - 버전 목록으로 순서 비교하기`() {
-        // GIVEN
-        val versions = listOf(
-            "0.0.1-rc1",
-            "0.0.1-rc2",
-            "0.0.1-rc3+abc",
-            "0.0.1",
-            "1.0.0-0.3.7",
-            "1.0.0-alpha",
-            "1.0.0-alpha.1",
-            "1.0.0-alpha.beta",
-            "1.0.0-beta",
-            "1.0.0-beta.2",
-            "1.0.0-beta.11",
-            "1.0.0-rc.1",
-            "1.0.0-x.7.z.92",
-            "1.0.0",
-            "2.0.0-alpha",
-            "2.0.0-alpha.1",
-            "2.0.0",
-            "2.1.0",
-            "2.1.1"
-        ).map { Version(it) }
-
-        for (l in 0..<(versions.size - 1)) {
-            for (h in (l + 1)..<versions.size) {
-                val low = versions[l]
-                val high = versions[h]
+        for (l in 0..<(SORTED_VERSIONS.size - 1)) {
+            for (h in (l + 1)..<SORTED_VERSIONS.size) {
+                // GIVEN
+                val low = SORTED_VERSIONS[l]
+                val high = SORTED_VERSIONS[h]
                 println("[GIVEN] low=$low, high=$high")
 
                 // WHEN
@@ -570,5 +572,21 @@ class VersionTest {
                 println()
             }
         }
+    }
+
+    @Test
+    fun `리스트 정렬하기 테스트`() {
+        // GIVEN
+        println("[GIVEN] SORTED_VERSIONS=$SORTED_VERSIONS")
+
+        val shuffled = SORTED_VERSIONS.shuffled()
+        println("[GIVEN] shuffled=$shuffled")
+
+        // WHEN
+        val sorted = shuffled.sorted()
+        println("[WHEN] sorted=$sorted")
+
+        // THEN
+        assertEquals(SORTED_VERSIONS, sorted)
     }
 }
