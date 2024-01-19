@@ -21,7 +21,7 @@ jobs:
           gradle-version: wrapper
           cache-read-only: false
       - name: Setup config.
-        run: cp .github/workflows/publish/local.properties local.properties
+        run: cp .github/workflows/local.properties local.properties
       - name: Publish
         run: ./gradlew clean :shared:publish
         env:
