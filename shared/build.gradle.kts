@@ -58,9 +58,9 @@ kotlin {
         }
 
         publications {
-            create<MavenPublication>("maven") {
+            withType<MavenPublication> {
                 groupId = "kr.lul"
-                artifactId = "semantic-version"
+                artifactId = "${rootProject.name}-$name".lowercase()
                 version = "0.0.1"
 
                 pom {
@@ -68,8 +68,6 @@ kotlin {
                         url = "https://github.com/JustBurrow/semantic-version"
                     }
                 }
-
-                from(components["kotlin"])
             }
         }
     }
@@ -102,4 +100,3 @@ android {
         testImplementation(libs.logback.classic)
     }
 }
-
