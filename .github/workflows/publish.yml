@@ -23,7 +23,7 @@ jobs:
       - name: Setup config.
         run: cp .github/workflows/local.properties local.properties
       - name: Publish
-        run: ./gradlew clean :shared:publish
+        run: ./gradlew clean publish
         env:
           GITHUB_ACTOR: ${{ github.actor }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -17,7 +17,7 @@ jobs:
       - name: Setup config.
         run: cp .github/workflows/local.properties local.properties
       - name: Run test
-        run: ./gradlew :shared:jvmTest  --rerun-tasks --continue
+        run: ./gradlew jvmTest  --rerun-tasks --continue
       - if: success() || failure()
         uses: actions/upload-artifact@v4
         name: Upload test report
