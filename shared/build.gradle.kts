@@ -60,7 +60,7 @@ kotlin {
         publications {
             withType<MavenPublication> {
                 groupId = "kr.lul"
-                artifactId = rootProject.name
+                artifactId = "${rootProject.name}-$name"
                 version = "0.0.1"
 
                 pom {
