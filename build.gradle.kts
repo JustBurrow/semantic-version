@@ -21,6 +21,7 @@ kotlin {
     jvm()
     listOf(
         iosArm64(),
+        iosSimulatorArm64(),
         macosArm64()
     ).forEach {
         it.binaries.framework {
