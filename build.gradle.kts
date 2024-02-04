@@ -19,6 +19,7 @@ kotlin {
     }
 
     jvm()
+
     listOf(
         iosArm64(),
         iosSimulatorArm64(),
@@ -48,7 +49,7 @@ kotlin {
         repositories {
             maven {
                 name = "GitHubPackages"
-                url = uri("https://maven.pkg.github.com/JustBurrow/semantic-version")
+                url = uri("https://maven.pkg.github.com/JustBurrow/packages")
                 credentials {
                     username = properties["github.actor"] as String?
                         ?: System.getenv("GITHUB_ACTOR")
