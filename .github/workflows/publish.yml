@@ -25,5 +25,5 @@ jobs:
       - name: Publish
         run: ./gradlew clean publish
         env:
-          GITHUB_ACTOR: ${{ github.actor }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_ACTOR: ${{ secrets.PUBLISH_ACTOR }}
+          GITHUB_TOKEN: ${{ secrets.PUBLISH_TOKEN }}

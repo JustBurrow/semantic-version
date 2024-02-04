@@ -1,5 +1,6 @@
 package kr.lul.version
 
+import kr.lul.logging.Logger
 import kotlin.test.Test
 import kotlin.test.assertContains
 import kotlin.test.assertEquals
@@ -10,7 +11,7 @@ import kotlin.test.assertTrue
 
 @Suppress("NonAsciiCharacters")
 class VersionBuilderTest {
-    private val logger = Logger(VersionBuilderTest::class)
+    private val logger = Logger(VersionBuilderTest::class.qualifiedName!!)
 
     @Test
     fun `Core - 빈 문자열로 만들기`() {
@@ -18,7 +19,7 @@ class VersionBuilderTest {
         val e = assertFailsWith<IllegalArgumentException> {
             Core("")
         }
-        logger.log("[WHEN] e=$e", e)
+        logger.i("[WHEN] e=$e", e)
 
         // THEN
         assertNotNull(e)
@@ -52,13 +53,13 @@ class VersionBuilderTest {
             "abc"
         )) {
             // GIVEN
-            logger.log("[GIVEN] core=$core")
+            logger.i("[GIVEN] core=$core")
 
             // WHEN
             val e = assertFailsWith<IllegalArgumentException> {
                 Core(core)
             }
-            logger.log("[WHEN] e=$e", e)
+            logger.i("[WHEN] e=$e", e)
 
             // THEN
             assertNotNull(e)
@@ -90,11 +91,11 @@ class VersionBuilderTest {
             val major = data[1] as Int
             val minor = data[2] as Int
             val patch = data[3] as Int
-            logger.log("[GIVEN] core=$core, major=$major, minor=$minor, patch=$patch")
+            logger.i("[GIVEN] core=$core, major=$major, minor=$minor, patch=$patch")
 
             // WHEN
             val versionCore = Core(core)
-            logger.log("[WHEN] versionCore=$versionCore")
+            logger.i("[WHEN] versionCore=$versionCore")
 
             // THEN
             assertNotNull(versionCore)
@@ -125,13 +126,13 @@ class VersionBuilderTest {
             // GIVEN
             val parts = data[0]
             val message = data[1]
-            logger.log("[GIVEN] parts=$parts, message=$message")
+            logger.i("[GIVEN] parts=$parts, message=$message")
 
             // WHEN
             val e = assertFailsWith<IllegalArgumentException> {
                 PreRelease(parts)
             }
-            logger.log("[WHEN] e=$e", e)
+            logger.i("[WHEN] e=$e", e)
 
             // THEN
             assertNotNull(e)
@@ -159,11 +160,11 @@ class VersionBuilderTest {
             "beta",
             "beta.2"
         )) {
-            logger.log("[GIVEN] preRelease=$preRelease")
+            logger.i("[GIVEN] preRelease=$preRelease")
 
             // WHEN
             val actual = PreRelease(preRelease)
-            logger.log("[WHEN] actual=$actual")
+            logger.i("[WHEN] actual=$actual")
 
             // THEN
             assertIs<PreRelease>(actual)
@@ -197,12 +198,12 @@ class VersionBuilderTest {
             listOf("beta.2", "rc.1"),
         )) {
             // GIVEN
-            logger.log("[GIVEN] data=$data")
+            logger.i("[GIVEN] data=$data")
 
             // WHEN
             val pr1 = PreRelease(data[0])
             val pr2 = PreRelease(data[1])
-            logger.log("[WHEN]  pr1=$pr1, pr2=$pr2")
+            logger.i("[WHEN]  pr1=$pr1, pr2=$pr2")
 
             // THEN
             assertTrue(pr1 < pr2)
@@ -217,7 +218,7 @@ class VersionBuilderTest {
         val e = assertFailsWith<IllegalArgumentException> {
             Version("")
         }
-        logger.log("[WHEN] e=$e", e)
+        logger.i("[WHEN] e=$e", e)
 
         // THEN
         assertNotNull(e)
@@ -266,11 +267,11 @@ class VersionBuilderTest {
             "abc",
         )) {
             // GIVEN
-            logger.log("[GIVEN] version=$version")
+            logger.i("[GIVEN] version=$version")
 
             // WHEN
             val e = assertFailsWith<IllegalArgumentException> { Version(version) }
-            logger.log("[WHEN] e=$e", e)
+            logger.i("[WHEN] e=$e", e)
 
             // THEN
             assertNotNull(e)
@@ -305,11 +306,11 @@ class VersionBuilderTest {
             val patch = data[3] as Int
             val preRelease = data[4] as String?
             val build = data[5] as String?
-            logger.log("[GIVEN] version=$version, major=$major, minor=$minor, patch=$patch, preRelease=$preRelease, build=$build")
+            logger.i("[GIVEN] version=$version, major=$major, minor=$minor, patch=$patch, preRelease=$preRelease, build=$build")
 
             // WHEN
             val actual = Version(version)
-            logger.log("[WHEN] actual=$actual")
+            logger.i("[WHEN] actual=$actual")
 
             // THEN
             assertEquals(major, actual.major)

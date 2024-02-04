@@ -1,5 +1,6 @@
 package kr.lul.version
 
+import kr.lul.logging.Logger
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
@@ -26,7 +27,7 @@ class CoreTest {
         )
     }
 
-    private val logger = Logger(CoreTest::class)
+    private val logger = Logger(CoreTest::class.qualifiedName!!)
 
     @Test
     fun `new - 쓸 수 없는 숫자`() {
@@ -42,13 +43,13 @@ class CoreTest {
             val major = data[0]
             val minor = data[1]
             val patch = data[2]
-            logger.log("[GIVEN] major=$major, minor=$minor, patch=$patch")
+            logger.i("[GIVEN] major=$major, minor=$minor, patch=$patch")
 
             // WHEN
             val e = assertFailsWith<IllegalArgumentException> {
                 Core(major, minor, patch)
             }
-            logger.log("[WHEN] e=$e", e)
+            logger.i("[WHEN] e=$e", e)
 
             // THEN
             assertNotNull(e)
@@ -60,11 +61,11 @@ class CoreTest {
     fun `compareTo - 자기 자신`() {
         for (core in VALID_SAMPLE) {
             // GIVEN
-            logger.log("[GIVEN] core=$core")
+            logger.i("[GIVEN] core=$core")
 
             // WHEN
             val actual = core.compareTo(core)
-            logger.log("[WHEN] actual=$actual")
+            logger.i("[WHEN] actual=$actual")
 
             // THEN
             assertEquals(0, actual)
@@ -80,12 +81,12 @@ class CoreTest {
             // GIVEN
             val core1 = data[0]
             val core2 = data[1]
-            logger.log("[GIVEN] core1=$core1, core2=$core2")
+            logger.i("[GIVEN] core1=$core1, core2=$core2")
 
             // WHEN
             val actual1 = core1.compareTo(core2)
             val actual2 = core2.compareTo(core1)
-            logger.log("[WHEN] actual1=$actual1, actual2=$actual2")
+            logger.i("[WHEN] actual1=$actual1, actual2=$actual2")
 
             // THEN
             assertEquals(0, actual1)
@@ -101,12 +102,12 @@ class CoreTest {
                 // GIVEN
                 val core1 = VALID_SAMPLE[i]
                 val core2 = VALID_SAMPLE[j]
-                logger.log("[GIVEN] core1=$core1, core2=$core2")
+                logger.i("[GIVEN] core1=$core1, core2=$core2")
 
                 // WHEN
                 val actual1 = core1.compareTo(core2)
                 val actual2 = core2.compareTo(core1)
-                logger.log("[WHEN] actual1=$actual1, actual2=$actual2")
+                logger.i("[WHEN] actual1=$actual1, actual2=$actual2")
 
                 // THEN
                 assertTrue(core1 < core2)

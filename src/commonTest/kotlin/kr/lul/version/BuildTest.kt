@@ -1,5 +1,6 @@
 package kr.lul.version
 
+import kr.lul.logging.Logger
 import kotlin.test.Test
 import kotlin.test.assertContains
 import kotlin.test.assertEquals
@@ -17,7 +18,7 @@ class BuildTest {
         )
     }
 
-    private val logger = Logger(BuildTest::class)
+    private val logger = Logger(BuildTest::class.qualifiedName!!)
     private val validSample = listOf(
         "001",
         "20130313144700",
@@ -30,7 +31,7 @@ class BuildTest {
         val e = assertFailsWith<IllegalArgumentException> {
             Build("")
         }
-        logger.log("[WHEN] e=$e", e)
+        logger.i("[WHEN] e=$e", e)
 
         // THEN
         assertNotNull(e)
@@ -55,11 +56,11 @@ class BuildTest {
             "ㅠ1.2"
         )) {
             // GIVEN
-            logger.log("[GIVEN] build=$build")
+            logger.i("[GIVEN] build=$build")
 
             // WHEN
             val e = assertFailsWith<IllegalArgumentException> { Build(build) }
-            logger.log("[WHEN] e=$e", e)
+            logger.i("[WHEN] e=$e", e)
 
             // THEN
             assertNotNull(e)
@@ -75,11 +76,11 @@ class BuildTest {
     fun `new - 사용할 수 있는 문자열`() {
         for (build in validSample) {
             // GIVEN
-            logger.log("[GIVEN] build=$build")
+            logger.i("[GIVEN] build=$build")
 
             // WHEN
             val actual = Build(build)
-            logger.log("[WHEN] actual=$actual")
+            logger.i("[WHEN] actual=$actual")
 
             // THEN
             assertEquals(build, actual.toString())
@@ -91,7 +92,7 @@ class BuildTest {
     fun `== - 동일 인스턴스`() {
         for (build in VALID_SAMPLE) {
             // WHEN
-            logger.log("[WHEN] build=$build")
+            logger.i("[WHEN] build=$build")
 
             // THEN
             assertEquals(build, build)
@@ -103,12 +104,12 @@ class BuildTest {
     fun `== - 같은 값을 가진 서로 다른 인스턴스`() {
         for (build in validSample) {
             // GIVEN
-            logger.log("[GIVEN] build=$build")
+            logger.i("[GIVEN] build=$build")
 
             // WHEN
             val b1 = Build(build)
             val b2 = Build(build)
-            logger.log("[WHEN] b1=$b1, b2=$b2")
+            logger.i("[WHEN] b1=$b1, b2=$b2")
 
             // THEN
             assertEquals(b1, b2)
@@ -124,12 +125,12 @@ class BuildTest {
             val data = validSample.shuffled()
             val b1 = data[0]
             val b2 = data[1]
-            logger.log("[GIVEN] b1=$b1, b2=$b2")
+            logger.i("[GIVEN] b1=$b1, b2=$b2")
 
             // WHEN
             val build1 = Build(b1)
             val build2 = Build(b2)
-            logger.log("[WHEN] build1=$build1, build2=$build2")
+            logger.i("[WHEN] build1=$build1, build2=$build2")
 
             // THEN
             assertNotEquals(build1, build2)
