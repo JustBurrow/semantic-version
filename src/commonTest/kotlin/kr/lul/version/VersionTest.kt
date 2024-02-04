@@ -1,5 +1,6 @@
 package kr.lul.version
 
+import kr.lul.logging.Logger
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
@@ -33,17 +34,17 @@ class VersionTest {
         ).map { Version(it) }
     }
 
-    private val logger = Logger(VersionTest::class)
+    private val logger = Logger(VersionTest::class.qualifiedName!!)
 
     @Test
     fun `new - core만 설정`() {
         for (core in CoreTest.VALID_SAMPLE) {
             // GIVEN
-            logger.log("[GIVEN] core=$core")
+            logger.i("[GIVEN] core=$core")
 
             // WHEN
             val version = Version(core)
-            logger.log("[WHEN] version=$version")
+            logger.i("[WHEN] version=$version")
 
             // THEN
             assertEquals(core, version.core)
@@ -59,11 +60,11 @@ class VersionTest {
         for (core in CoreTest.VALID_SAMPLE) {
             for (preRelease in PreReleaseTest.VALID_SAMPLE) {
                 // GIVEN
-                logger.log("[GIVEN] core=$core, preRelease=$preRelease")
+                logger.i("[GIVEN] core=$core, preRelease=$preRelease")
 
                 // WHEN
                 val version = Version(core, preRelease)
-                logger.log("[WHEN] version=$version")
+                logger.i("[WHEN] version=$version")
 
                 // THEN
                 assertEquals(core, version.core)
@@ -80,11 +81,11 @@ class VersionTest {
         for (core in CoreTest.VALID_SAMPLE) {
             for (build in BuildTest.VALID_SAMPLE) {
                 // GIVEN
-                logger.log("[GIVEN] core=$core, build=$build")
+                logger.i("[GIVEN] core=$core, build=$build")
 
                 // WHEN
                 val version = Version(core = core, build = build)
-                logger.log("[WHEN] version=$version")
+                logger.i("[WHEN] version=$version")
 
                 // THEN
                 assertEquals(core, version.core)
@@ -102,11 +103,11 @@ class VersionTest {
             for (preRelease in PreReleaseTest.VALID_SAMPLE) {
                 for (build in BuildTest.VALID_SAMPLE) {
                     // GIVEN
-                    logger.log("[GIVEN] core=$core, preRelease=$preRelease, build=$build")
+                    logger.i("[GIVEN] core=$core, preRelease=$preRelease, build=$build")
 
                     // WHEN
                     val version = Version(core, preRelease, build)
-                    logger.log("[WHEN] version=$version")
+                    logger.i("[WHEN] version=$version")
 
                     // THEN
                     assertEquals(core, version.core)
@@ -124,11 +125,11 @@ class VersionTest {
         for (core in CoreTest.VALID_SAMPLE) {
             // GIVEN
             val version = Version(core)
-            logger.log("[GIVEN] version=$version")
+            logger.i("[GIVEN] version=$version")
 
             // WHEN
             val compare = version.compareTo(version)
-            logger.log("[WHEN] compare=$compare")
+            logger.i("[WHEN] compare=$compare")
 
             // THEN
             assertEquals(0, compare)
@@ -143,12 +144,12 @@ class VersionTest {
             // GIVEN
             val version1 = Version(core)
             val version2 = Version(Core(core.major, core.minor, core.patch))
-            logger.log("[GIVEN] version1=$version1")
+            logger.i("[GIVEN] version1=$version1")
 
             // WHEN
             val compare1 = version1.compareTo(version2)
             val compare2 = version2.compareTo(version1)
-            logger.log("[WHEN] compare1=$compare1, compare2=$compare2")
+            logger.i("[WHEN] compare1=$compare1, compare2=$compare2")
 
             // THEN
             assertEquals(0, compare1)
@@ -165,12 +166,12 @@ class VersionTest {
             // GIVEN
             val version1 = Version(CoreTest.VALID_SAMPLE[i])
             val version2 = Version(CoreTest.VALID_SAMPLE[i + 1])
-            logger.log("[GIVEN] version1=$version1, version2=$version2")
+            logger.i("[GIVEN] version1=$version1, version2=$version2")
 
             // WHEN
             val compare1 = version1.compareTo(version2)
             val compare2 = version2.compareTo(version1)
-            logger.log("[WHEN] compare1=$compare1, compare2=$compare2")
+            logger.i("[WHEN] compare1=$compare1, compare2=$compare2")
 
             // THEN
             assertTrue(0 > compare1)
@@ -189,11 +190,11 @@ class VersionTest {
             for (pr in PreReleaseTest.VALID_SAMPLE) {
                 // GIVEN
                 val version = Version(core, pr)
-                logger.log("[GIVEN] version=$version")
+                logger.i("[GIVEN] version=$version")
 
                 // WHEN
                 val compare = version.compareTo(version)
-                logger.log("[WHEN] compare=$compare")
+                logger.i("[WHEN] compare=$compare")
 
                 // THEN
                 assertEquals(0, compare)
@@ -211,12 +212,12 @@ class VersionTest {
                 val version1 = Version(core, pr)
                 val version2 =
                     Version(Core(core.major, core.minor, core.patch), PreRelease(pr.toString()))
-                logger.log("[GIVEN] version=$version1, version2=$version2")
+                logger.i("[GIVEN] version=$version1, version2=$version2")
 
                 // WHEN
                 val compare1 = version1.compareTo(version2)
                 val compare2 = version2.compareTo(version1)
-                logger.log("[WHEN] compare1=$compare1, compare2=$compare2")
+                logger.i("[WHEN] compare1=$compare1, compare2=$compare2")
 
                 // THEN
                 assertEquals(0, compare1)
@@ -236,12 +237,12 @@ class VersionTest {
                     // GIVEN
                     val version1 = Version(core, PreReleaseTest.VALID_SAMPLE[i])
                     val version2 = Version(core, PreReleaseTest.VALID_SAMPLE[j])
-                    logger.log("[GIVEN] version1=$version1, version2=$version2")
+                    logger.i("[GIVEN] version1=$version1, version2=$version2")
 
                     // WHEN
                     val compare1 = version1.compareTo(version2)
                     val compare2 = version2.compareTo(version1)
-                    logger.log("[WHEN] compare1=$compare1, compare2=$compare2")
+                    logger.i("[WHEN] compare1=$compare1, compare2=$compare2")
 
                     // THEN
                     assertTrue(0 < compare1)
@@ -264,12 +265,12 @@ class VersionTest {
                     // GIVEN
                     val version1 = Version(CoreTest.VALID_SAMPLE[i], pr)
                     val version2 = Version(CoreTest.VALID_SAMPLE[j], pr)
-                    logger.log("[GIVEN] version1=$version1, version2=$version2")
+                    logger.i("[GIVEN] version1=$version1, version2=$version2")
 
                     // WHEN
                     val compare1 = version1.compareTo(version2)
                     val compare2 = version2.compareTo(version1)
-                    logger.log("[WHEN] compare1=$compare1, compare2=$compare2")
+                    logger.i("[WHEN] compare1=$compare1, compare2=$compare2")
 
                     // THEN
                     assertTrue(0 < compare1)
@@ -290,11 +291,11 @@ class VersionTest {
             for (build in BuildTest.VALID_SAMPLE) {
                 // GIVEN
                 val version = Version(core, build = build)
-                logger.log("[GIVEN] version=$version")
+                logger.i("[GIVEN] version=$version")
 
                 // WHEN
                 val compare = version.compareTo(version)
-                logger.log("[WHEN] compare=$compare")
+                logger.i("[WHEN] compare=$compare")
 
                 // THEN
                 assertEquals(0, compare)
@@ -311,12 +312,12 @@ class VersionTest {
                 // GIVEN
                 val version1 = Version(core, build = build)
                 val version2 = Version(core, build = build)
-                logger.log("[GIVEN] version=$version1, version2=$version2")
+                logger.i("[GIVEN] version=$version1, version2=$version2")
 
                 // WHEN
                 val compare1 = version1.compareTo(version2)
                 val compare2 = version2.compareTo(version1)
-                logger.log("[WHEN] compare1=$compare1, compare2=$compare2")
+                logger.i("[WHEN] compare1=$compare1, compare2=$compare2")
 
                 // THEN
                 assertEquals(0, compare1)
@@ -340,12 +341,12 @@ class VersionTest {
                     // GIVEN
                     val version1 = Version(core, build = BuildTest.VALID_SAMPLE[i])
                     val version2 = Version(core, build = BuildTest.VALID_SAMPLE[j])
-                    logger.log("[GIVEN] version1=$version1, version2=$version2")
+                    logger.i("[GIVEN] version1=$version1, version2=$version2")
 
                     // WHEN
                     val compare1 = version1.compareTo(version2)
                     val compare2 = version2.compareTo(version1)
-                    logger.log("[WHEN] compare1=$compare1, compare2=$compare2")
+                    logger.i("[WHEN] compare1=$compare1, compare2=$compare2")
 
                     // THEN
                     assertEquals(0, compare1)
@@ -369,11 +370,11 @@ class VersionTest {
                 for (build in BuildTest.VALID_SAMPLE) {
                     // GIVEN
                     val version = Version(core, preRelease, build)
-                    logger.log("[GIVEN] version=$version")
+                    logger.i("[GIVEN] version=$version")
 
                     // WHEN
                     val compare = version.compareTo(version)
-                    logger.log("[WHEN] compare=$compare")
+                    logger.i("[WHEN] compare=$compare")
 
                     // THEN
                     assertEquals(0, compare)
@@ -394,12 +395,12 @@ class VersionTest {
                     // GIVEN
                     val version1 = Version(core, preRelease, build)
                     val version2 = Version(core, preRelease, build)
-                    logger.log("[GIVEN] version=$version1, version2=$version2")
+                    logger.i("[GIVEN] version=$version1, version2=$version2")
 
                     // WHEN
                     val compare1 = version1.compareTo(version1)
                     val compare2 = version2.compareTo(version1)
-                    logger.log("[WHEN] compare1=$compare1, compare2=$compare2")
+                    logger.i("[WHEN] compare1=$compare1, compare2=$compare2")
 
                     // THEN
                     assertEquals(0, compare1)
@@ -425,12 +426,12 @@ class VersionTest {
                         // GIVEN
                         val version1 = Version(core, preRelease, BuildTest.VALID_SAMPLE[i])
                         val version2 = Version(core, preRelease, BuildTest.VALID_SAMPLE[j])
-                        logger.log("[GIVEN] version1=$version1, version2=$version2")
+                        logger.i("[GIVEN] version1=$version1, version2=$version2")
 
                         // WHEN
                         val compare1 = version1.compareTo(version2)
                         val compare2 = version2.compareTo(version1)
-                        logger.log("[WHEN] compare1=$compare1, compare2=$compare2")
+                        logger.i("[WHEN] compare1=$compare1, compare2=$compare2")
 
                         // THEN
                         assertEquals(0, compare1)
@@ -456,12 +457,12 @@ class VersionTest {
                             // GIVEN
                             val version1 = Version(core, PreReleaseTest.VALID_SAMPLE[i], build1)
                             val version2 = Version(core, PreReleaseTest.VALID_SAMPLE[j], build2)
-                            logger.log("[GIVEN] version1=$version1, version2=$version2")
+                            logger.i("[GIVEN] version1=$version1, version2=$version2")
 
                             // WHEN
                             val compare1 = version1.compareTo(version2)
                             val compare2 = version2.compareTo(version1)
-                            logger.log("[WHEN] compare1=$compare1, compare2=$compare2")
+                            logger.i("[WHEN] compare1=$compare1, compare2=$compare2")
 
                             // THEN
                             assertTrue(0 > compare1)
@@ -488,12 +489,12 @@ class VersionTest {
                             // GIVEN
                             val version1 = Version(CoreTest.VALID_SAMPLE[ci], preRelease, build1)
                             val version2 = Version(CoreTest.VALID_SAMPLE[cj], preRelease, build2)
-                            logger.log("[GIVEN] ")
+                            logger.i("[GIVEN] ")
 
                             // WHEN
                             val compare1 = version1.compareTo(version2)
                             val compare2 = version2.compareTo(version1)
-                            logger.log("[WHEN] compare1=$compare1, compare2=$compare2")
+                            logger.i("[WHEN] compare1=$compare1, compare2=$compare2")
 
                             // THEN
                             assertTrue(0 > compare1)
@@ -529,12 +530,12 @@ class VersionTest {
                                     PreReleaseTest.VALID_SAMPLE[prj],
                                     build2
                                 )
-                                logger.log("[GIVEN] version1=$version1, version2=$version2")
+                                logger.i("[GIVEN] version1=$version1, version2=$version2")
 
                                 // WHEN
                                 val compare1 = version1.compareTo(version2)
                                 val compare2 = version2.compareTo(version1)
-                                logger.log("[WHEN] compare1=$compare1, compare2=$compare2")
+                                logger.i("[WHEN] compare1=$compare1, compare2=$compare2")
 
                                 // THEN
                                 assertTrue(0 > compare1)

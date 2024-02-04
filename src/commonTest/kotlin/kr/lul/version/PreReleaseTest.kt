@@ -1,5 +1,6 @@
 package kr.lul.version
 
+import kr.lul.logging.Logger
 import kr.lul.version.PreRelease.Part
 import kotlin.test.Test
 import kotlin.test.assertContains
@@ -29,7 +30,7 @@ class PreReleaseTest {
         )
     }
 
-    private val logger = Logger(PreReleaseTest::class)
+    private val logger = Logger(PreReleaseTest::class.qualifiedName!!)
 
     @Test
     fun `Part new - 사용할 수 없는 값`() {
@@ -54,13 +55,13 @@ class PreReleaseTest {
             val number = data[0] as Int?
             val text = data[1] as String?
             val message = data[2] as String
-            logger.log("[GIVEN] number=$number, text=$text, message=$message")
+            logger.i("[GIVEN] number=$number, text=$text, message=$message")
 
             // WHEN
             val e = assertFailsWith<IllegalArgumentException> {
                 Part(number, text)
             }
-            logger.log("[WHEN] e=$e", e)
+            logger.i("[WHEN] e=$e", e)
 
             // THEN
             assertNotNull(e)
@@ -84,11 +85,11 @@ class PreReleaseTest {
             val number = data[0] as Int?
             val text = data[1] as String?
             val string = data[2] as String
-            logger.log("[GIVEN] number=$number, text=$text, string=$string")
+            logger.i("[GIVEN] number=$number, text=$text, string=$string")
 
             // WHEN
             val part = Part(number, text)
-            logger.log("[WHEN] part=$part")
+            logger.i("[WHEN] part=$part")
 
             // THEN
             assertEquals(number, part.number)
@@ -109,11 +110,11 @@ class PreReleaseTest {
             Part(text = "b001")
         )) {
             // GIVEN
-            logger.log("[GIVEN] part=$part")
+            logger.i("[GIVEN] part=$part")
 
             // WHEN
             val actual = part.compareTo(part)
-            logger.log("[WHEN] actual=$actual")
+            logger.i("[WHEN] actual=$actual")
 
             // THEN
             assertEquals(0, actual)
@@ -134,12 +135,12 @@ class PreReleaseTest {
             // GIVEN
             val part1 = Part(data[0] as Int?, data[1] as String?)
             val part2 = Part(data[0] as Int?, data[1] as String?)
-            logger.log("[GIVEN] part1=$part1, part2=$part2")
+            logger.i("[GIVEN] part1=$part1, part2=$part2")
 
             // WHEN
             val compare1 = part1.compareTo(part2)
             val compare2 = part2.compareTo(part1)
-            logger.log("[WHEN] compare1=$compare1, compare2=$compare2")
+            logger.i("[WHEN] compare1=$compare1, compare2=$compare2")
 
             // THEN
             assertEquals(0, compare1)
@@ -163,12 +164,12 @@ class PreReleaseTest {
             // GIVEN
             val part1 = data[0]
             val part2 = data[1]
-            logger.log("[GIVEN] part1=$part1, part2=$part2")
+            logger.i("[GIVEN] part1=$part1, part2=$part2")
 
             // WHEN
             val compare1 = part1.compareTo(part2)
             val compare2 = part2.compareTo(part1)
-            logger.log("[WHEN] compare1=$compare1, compare2=$compare2")
+            logger.i("[WHEN] compare1=$compare1, compare2=$compare2")
 
             // THEN
             assertTrue(0 > compare1)
@@ -183,7 +184,7 @@ class PreReleaseTest {
         val e = assertFailsWith<IllegalArgumentException> {
             PreRelease(listOf())
         }
-        logger.log("[WHEN] ")
+        logger.i("[WHEN] ")
 
         // THEN
         assertNotNull(e)
@@ -201,11 +202,11 @@ class PreReleaseTest {
         )) {
             // GIVEN
             val preRelease = PreRelease(parts)
-            logger.log("[GIVEN] preRelease=$preRelease")
+            logger.i("[GIVEN] preRelease=$preRelease")
 
             // WHEN
             val compare = preRelease.compareTo(preRelease)
-            logger.log("[WHEN] compare=$compare")
+            logger.i("[WHEN] compare=$compare")
 
             // THEN
             assertEquals(0, compare)
@@ -226,12 +227,12 @@ class PreReleaseTest {
             // GIVEN
             val preRelease1 = PreRelease(parts)
             val preRelease2 = PreRelease(parts)
-            logger.log("[GIVEN] preRelease1=$preRelease1, preRelease2=$preRelease2")
+            logger.i("[GIVEN] preRelease1=$preRelease1, preRelease2=$preRelease2")
 
             // WHEN
             val compare1 = preRelease1.compareTo(preRelease2)
             val compare2 = preRelease2.compareTo(preRelease1)
-            logger.log("[WHEN] compare1=$compare1, compare2=$compare2")
+            logger.i("[WHEN] compare1=$compare1, compare2=$compare2")
 
             // THEN
             assertEquals(0, compare1)
@@ -296,12 +297,12 @@ class PreReleaseTest {
             // GIVEN
             val pr1 = PreRelease(data[0])
             val pr2 = PreRelease(data[1])
-            logger.log("[GIVEN] pr1=$pr1, pr2=$pr2")
+            logger.i("[GIVEN] pr1=$pr1, pr2=$pr2")
 
             // WHEN
             val compare1 = pr1.compareTo(pr2)
             val compare2 = pr2.compareTo(pr1)
-            logger.log("[WHEN] compare1=$compare1, compare2=$compare2")
+            logger.i("[WHEN] compare1=$compare1, compare2=$compare2")
 
             // THEN
             assertTrue(0 > compare1)
