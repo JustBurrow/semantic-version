@@ -73,7 +73,7 @@ kotlin {
             withType<MavenPublication> {
                 groupId = "kr.lul"
                 artifactId = "${rootProject.name}-$name".lowercase()
-                version = "0.0.1"
+                version = "0.0.2"
 
                 pom {
                     scm {
