@@ -121,6 +121,34 @@ class VersionTest {
     }
 
     @Test
+    fun `new - 기본 자료형 사용하는 생성자`() {
+        for (core in CoreTest.VALID_SAMPLE) {
+            for (preRelease in PreReleaseTest.VALID_SAMPLE) {
+                for (build in BuildTest.VALID_SAMPLE) {
+                    // GIVEN
+                    logger.i("[GIVEN] core=$core, preRelease=$preRelease, build=$build")
+
+                    // WHEN
+                    val version = Version(
+                        core.major,
+                        core.minor,
+                        core.patch,
+                        preRelease?.toString(),
+                        build?.toString()
+                    )
+                    logger.i("[WHEN] version=$version")
+
+                    // THEN
+                    assertEquals(core, version.core)
+                    assertEquals(preRelease, version.preRelease)
+                    assertEquals(core, version.core)
+                    println()
+                }
+            }
+        }
+    }
+
+    @Test
     fun `compareTo - core만 있을 때 동일 인스턴스`() {
         for (core in CoreTest.VALID_SAMPLE) {
             // GIVEN
