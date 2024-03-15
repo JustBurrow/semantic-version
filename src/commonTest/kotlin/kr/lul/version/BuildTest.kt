@@ -14,7 +14,8 @@ class BuildTest {
         val VALID_SAMPLE = listOf(
             Build("001"),
             Build("20130313144700"),
-            Build("exp.sha.5114f85")
+            Build("exp.sha.5114f85"),
+            null
         )
     }
 

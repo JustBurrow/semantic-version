@@ -42,6 +42,18 @@ fun PreRelease(preRelease: String): PreRelease {
     )
 }
 
+fun PreRelease?.clone() = if (null == this) {
+    null
+} else {
+    PreRelease(this.toString())
+}
+
+fun Build?.clone() = if (null == this) {
+    null
+} else {
+    Build(this.toString())
+}
+
 fun Version(version: String): Version {
     when {
         version.isEmpty() ->
