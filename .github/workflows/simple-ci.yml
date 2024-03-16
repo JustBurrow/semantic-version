@@ -15,12 +15,12 @@ jobs:
         with:
           gradle-version: wrapper
       - name: Setup config.
-        run: |
-          cp .github/workflows/local.properties local.properties
-          echo "github.actor=${{ secrets.PUBLISH_ACTOR }}" >> local.properties
-          echo "github.token=${{ secrets.PUBLISH_TOKEN }}" >> local.properties
+        run: cp .github/workflows/local.properties local.properties
       - name: Run test
         run: ./gradlew jvmTest  --rerun-tasks --continue
+        env:
+          GITHUB_ACTOR: ${{ secrets.PUBLISH_ACTOR }}
+          GITHUB_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
       - if: success() || failure()
         uses: actions/upload-artifact@v4
         name: Upload test report
