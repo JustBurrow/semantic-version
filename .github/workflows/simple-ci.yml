@@ -15,7 +15,10 @@ jobs:
         with:
           gradle-version: wrapper
       - name: Setup config.
-        run: cp .github/workflows/local.properties local.properties
+        run: |
+          cp .github/workflows/local.properties local.properties
+          echo "github.actor=${{ secrets.PUBLISH_ACTOR }}" >> local.properties
+          echo "github.token=${{ secrets.PUBLISH_TOKEN }}" >> local.properties
       - name: Run test
         run: ./gradlew jvmTest  --rerun-tasks --continue
       - if: success() || failure()
