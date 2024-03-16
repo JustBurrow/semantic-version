@@ -6,7 +6,7 @@ on:
       - main
 jobs:
   publish:
-    runs-on: macos-latest
+    runs-on: macos-14
     permissions:
       contents: read
       packages: write
