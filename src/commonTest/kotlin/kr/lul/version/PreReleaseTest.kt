@@ -26,7 +26,8 @@ class PreReleaseTest {
             PreRelease("beta"),
             PreRelease("beta.1"),
             PreRelease("beta.1.2.3.test"),
-            PreRelease("beta.2")
+            PreRelease("beta.2"),
+            null
         )
     }
 

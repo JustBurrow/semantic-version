@@ -70,7 +70,7 @@ class VersionTest {
                 assertEquals(core, version.core)
                 assertEquals(preRelease, version.preRelease)
                 assertNull(version.build)
-                assertEquals("$core-$preRelease", version.toString())
+                assertEquals("$core${preRelease?.let { "-$it" }?:""}", version.toString())
                 println()
             }
         }
@@ -91,7 +91,7 @@ class VersionTest {
                 assertEquals(core, version.core)
                 assertNull(version.preRelease)
                 assertEquals(build, version.build)
-                assertEquals("$core+$build", version.toString())
+                assertEquals("$core${build?.let { "+$it" }?:""}", version.toString())
                 println()
             }
         }
@@ -113,7 +113,35 @@ class VersionTest {
                     assertEquals(core, version.core)
                     assertEquals(preRelease, version.preRelease)
                     assertEquals(build, version.build)
-                    assertEquals("$core-$preRelease+$build", version.toString())
+                    assertEquals("$core${preRelease?.let { "-$it" } ?:""}${build?.let { "+$it" }?:""}", version.toString())
+                    println()
+                }
+            }
+        }
+    }
+
+    @Test
+    fun `new - 기본 자료형 사용하는 생성자`() {
+        for (core in CoreTest.VALID_SAMPLE) {
+            for (preRelease in PreReleaseTest.VALID_SAMPLE) {
+                for (build in BuildTest.VALID_SAMPLE) {
+                    // GIVEN
+                    logger.i("[GIVEN] core=$core, preRelease=$preRelease, build=$build")
+
+                    // WHEN
+                    val version = Version(
+                        core.major,
+                        core.minor,
+                        core.patch,
+                        preRelease?.toString(),
+                        build?.toString()
+                    )
+                    logger.i("[WHEN] version=$version")
+
+                    // THEN
+                    assertEquals(core, version.core)
+                    assertEquals(preRelease, version.preRelease)
+                    assertEquals(core, version.core)
                     println()
                 }
             }
@@ -210,8 +238,10 @@ class VersionTest {
             for (pr in PreReleaseTest.VALID_SAMPLE) {
                 // GIVEN
                 val version1 = Version(core, pr)
-                val version2 =
-                    Version(Core(core.major, core.minor, core.patch), PreRelease(pr.toString()))
+                val version2 = Version(
+                    core = Core(core.major, core.minor, core.patch),
+                    preRelease = pr.clone()
+                )
                 logger.i("[GIVEN] version=$version1, version2=$version2")
 
                 // WHEN

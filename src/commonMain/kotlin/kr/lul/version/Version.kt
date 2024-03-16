@@ -17,6 +17,26 @@ class Version(
     val minor = core.minor
     val patch = core.patch
 
+    constructor(
+        major: Int,
+        minor: Int,
+        patch: Int,
+        preRelease: String? = null,
+        build: String? = null
+    ):this(
+        core = Core(major, minor, patch),
+        preRelease = if (null == preRelease) {
+            null
+        } else {
+            PreRelease(preRelease)
+        },
+        build = if (null == build) {
+            null
+        } else {
+            Build(build)
+        }
+    )
+
     override fun compareTo(other: Version): Int = when {
         core != other.core ||
                 (null == preRelease && null == other.preRelease) ->
